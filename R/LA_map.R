@@ -16,7 +16,7 @@
 #' @examples
 #' df <- dluhctheme::Help_to_Buy
 #' LA_map(df,variable = Completions,LA_col = LA_Code,year = "2020-21",countries = "E",save = FALSE)
-LA_map <- function(.data,variable,LA_col,map_colours = c("#FFFFFF","#012169"),year = "2021-22",countries = "E",save = FALSE,filepath = NULL){
+LA_map <- function(.data,variable,LA_col,map_colours = c("#FFFFFF","#012169"),year = "2023-24",countries = "E",save = FALSE,filepath = NULL){
 
 
     if(countries %in% c("E","E+W","GB","UK")==FALSE){
@@ -40,13 +40,13 @@ LA_map <- function(.data,variable,LA_col,map_colours = c("#FFFFFF","#012169"),ye
 
   map_match <-
     data.frame(
-      year = c("2020-21","2021-22","2022-23"),
-      filenames = c("LAD_Dec2020_BUC","LAD_May2021_BUC","LAD_Dec2022_BUC"),
-      LA_Column = c("LAD20CD","LAD21CD","LAD22CD")
+      year = c("2020-21","2021-22","2022-23","2023-24"),
+      filenames = c("LAD_Dec2020_BUC","LAD_May2021_BUC","LAD_Dec2022_BUC","LAD_Dec2023_BUC"),
+      LA_Column = c("LAD20CD","LAD21CD","LAD22CD","LAD23CD")
     )
 
   if(!(year %in% map_match$year)){
-    stop("The year you have selected is outside the range of maps available. Please contact the package owner to update the maps available")
+    stop("The year you have selected is outside the range of maps available. It must be in the format '2021-22'. Please contact the package owner to update the maps available")
   }
 
   rawdata_LA_Col <- .data |>
@@ -63,9 +63,12 @@ LA_map <- function(.data,variable,LA_col,map_colours = c("#FFFFFF","#012169"),ye
     LA_map_data <- sf::st_as_sf(dluhctheme::LAD_Dec2020_BUC)
   }else if(year == "2021-22"){
     LA_map_data <- sf::st_as_sf(dluhctheme::LAD_May2021_BUC)
-  }else{
+  }else if(year=="2022-23"){
      LA_map_data <- sf::st_as_sf(dluhctheme::LAD_Dec2022_BUC)
+  }else{
+    LA_map_data <- sf::st_as_sf(dluhctheme::LAD_Dec2023_BUC)
   }
+
 
 
 
